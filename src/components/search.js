@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './style.css';
 import button from '../assets/search-icon.png';
 import random from '../assets/random.png';
+import {trackPromise} from 'react-promise-tracker';
 
 class Search extends Component {
     state = {  
@@ -19,10 +20,12 @@ class Search extends Component {
         const check = this.state.query;
         let x = '';
         const url = 'https://quote-garden.herokuapp.com/quotes/search/'+check;
+        trackPromise (
         fetch(url)
         .then(response => response.json())
         .then(data => this.setState({ query: check, quote:data.results[x=Math.floor(Math.random()*Math.floor(data.count))].quoteText, author:data.results[x].quoteAuthor}))
-        .catch(e => console.log('error', e));
+        .catch(e => console.log('error', e))
+        );
     }
 
     render() {
@@ -36,10 +39,10 @@ class Search extends Component {
                         </button>
                     </div>
                 </form>
-            
+                
                 <div>
                     <div className="quote"> {this.state.quote} </div>
-                    <div className="author"> --{this.state.author}-- </div>
+                    <div className="author"> {this.state.author} </div>
                 </div>
             
                 <button className='random' onClick={this.handleSubmit}> 
