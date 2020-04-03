@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import './style.css';
+import LoadingIndicator from './loader';
 import button from '../assets/search-icon.png';
 import random from '../assets/random.png';
 import {trackPromise} from 'react-promise-tracker';
+
 
 class Search extends Component {
     state = {  
         query: '' ,
         quote: '',
-        author: ''
+        author: '',
+        loading: false,
     }
 
     handleChange = event => {
-        this.setState({query: event.target.value});
+        this.setState({
+            query: event.target.value
+        });
     }
 
     handleSubmit = event => {
